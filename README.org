@@ -1,0 +1,83 @@
+** Disclaimer
+This uses undocumented features of Google's Publish feature. This may change in
+the future, which will break this library. Don't use this for a missile launch
+system. 
+** Usage
+To use this library, you need a sheet-id that can be found in the URL for your
+google sheet: ~docs.google.com/spreadsheets/d/THIS-IS-YOUR-SHEET-ID/edit#gid=0~.
+
+You will also need to Publish your google sheet, which can be done in the google
+sheets web interface: ~File~ > ~Publish to the web~. Make sure to publish the
+entire document as a web page. These options should be set by default.
+
+This example uses [[https://docs.google.com/spreadsheets/d/1EOWjYGWIzf8i7rcnlhvqWtRL5Ke2V2vz7FgYGYL8EBo/edit?usp=sharing][this]] Google Sheet.
+
+#+begin_src clojure
+  (ns example.core
+    (:require [clojure-sheets.core :as sheets]
+              [clojure-sheets.key-fns :as sheets.key-fns]
+              [clojure.core.async :as a]))
+
+  (a/<!! (sheets/sheet->map "1EOWjYGWIzf8i7rcnlhvqWtRL5Ke2V2vz7FgYGYL8EBo"
+                            {:page  1
+                             :key-fn sheets.key-fns/idiomatic-keyword}))
+  ;; => [{:person/first-name "Matilda",
+  ;;      :person/last-name "Jones",
+  ;;      :person/address "123 Some Road",
+  ;;      :person/address1 "Apt 4",
+  ;;      :person/address2 nil,
+  ;;      :person.address/city "Somewhereville",
+  ;;      :person.address/state "MA"}
+  ;;     {:person/first-name "Michael",
+  ;;      :person/last-name "Jones",
+  ;;      :person/address "321 Another Ave",
+  ;;      :person/address1 "Apartment Complex",
+  ;;      :person/address2 "Unit 32",
+  ;;      :person.address/city "Somewhereville",
+  ;;      :person.address/state "MA"}
+  ;;     {:person/first-name "Another",
+  ;;      :person/last-name "Person",
+  ;;      :person/address "1234 Some Lane",
+  ;;      :person/address1 nil,
+  ;;      :person/address2 nil,
+  ;;      :person.address/city "Boston",
+  ;;      :person.address/state "MA"}
+  ;;     {:person/first-name "Nobody",
+  ;;      :person/last-name "Noname",
+  ;;      :person/address nil,
+  ;;      :person/address1 nil,
+  ;;      :person/address2 nil,
+  ;;      :person.address/city "Noplace",
+  ;;      :person.address/state "NO"}]
+
+  (a/<!! (sheets/sheet->map "1EOWjYGWIzf8i7rcnlhvqWtRL5Ke2V2vz7FgYGYL8EBo"
+                            {:page  2
+                             :key-fn keyword}))
+  ;; => [{:DataPoint "Alpha", :Data1 1.0, :Data2 123.0, :Data3 32.5}
+  ;;     {:DataPoint "Beta", :Data1 2.0, :Data2 188.12, :Data3 122.4, :Data4 33.0}
+  ;;     {:DataPoint "Epsilon",
+  ;;      :Data1 1.4,
+  ;;      :Data2 290.0,
+  ;;      :Data3 5.5,
+  ;;      :Data4 123.0,
+  ;;      :Data5 11.0}
+  ;;     {:DataPoint "Monkey", :Data1 33.0, :Data2 1.0, :Data3 33.0, :Data4 0.0}]
+#+end_src
+
+*** ~:key-fns~
+The ~:key-fn~ option to the ~sheet->map~ function takes a header and returns an
+appropriate map key. Any function that takes a string can be used, but here are
+some examples of ~:key-fn~ that will be most useful. These examples are taken
+from the Usage section.
+
+| Original Header         | ~clojure.core/keyword~ | ~clojure-sheets.key-fns/idiomatic-keyword~ |
+|-------------------------+------------------------+--------------------------------------------|
+| ~"person/first-name"~   | ~:person/first-name~   | ~:person/first-name~                       |
+| ~"person_last-name"~    | ~:person_last-name~    | ~:person/last-name~                        |
+| ~"Person.Address"~      | ~:Person.Address~      | ~:person/address~                          |
+| ~"Person.Address.City"~ | ~:Person.Address.City~ | ~:person.address/city~                     |
+| ~"DataPoint"~           | ~:DataPoint~           | ~:datapoint~                               |
+
+As you can see, ~idiomatic-keyword~ consistently gives the best results. You
+should probably prefer this ~:key-fn~, unless you have a good reason for writing
+your own.
