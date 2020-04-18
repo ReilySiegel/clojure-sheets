@@ -70,13 +70,13 @@ appropriate map key. Any function that takes a string can be used, but here are
 some examples of ~:key-fn~ that will be most useful. These examples are taken
 from the Usage section.
 
-| Original Header         | ~clojure.core/keyword~ | ~clojure-sheets.key-fns/idiomatic-keyword~ |
-|-------------------------+------------------------+--------------------------------------------|
-| ~"person/first-name"~   | ~:person/first-name~   | ~:person/first-name~                       |
-| ~"person_last-name"~    | ~:person_last-name~    | ~:person/last-name~                        |
-| ~"Person.Address"~      | ~:Person.Address~      | ~:person/address~                          |
-| ~"Person.Address.City"~ | ~:Person.Address.City~ | ~:person.address/city~                     |
-| ~"DataPoint"~           | ~:DataPoint~           | ~:datapoint~                               |
+| Original Header       | ~clojure.core/keyword~ | ~clojure-sheets.key-fns/idiomatic-keyword~ |
+|-----------------------+------------------------+--------------------------------------------|
+| "person/first-name"   | ~:person/first-name~   | ~:person/first-name~                       |
+| "person_last-name"    | ~:person_last-name~    | ~:person/last-name~                        |
+| "Person.Address"      | ~:Person.Address~      | ~:person/address~                          |
+| "Person.Address.City" | ~:Person.Address.City~ | ~:person.address/city~                     |
+| "DataPoint"           | ~:DataPoint~           | ~:datapoint~                               |
 
 As you can see, ~idiomatic-keyword~ consistently gives the best results. You
 should probably prefer this ~:key-fn~, unless you have a good reason for writing
