@@ -24,7 +24,8 @@
 (defn- row->vec [row]
   (loop [row        (sort-by (comp :gs$cell :col) row)
          index      1
-         filled-row []]
+         ;; Start with the id
+         filled-row [(edn/read-string (get-in (first row) [:gs$cell :row]))]]
     (if-not (seq row)
       filled-row
       (if (= (str index) (get-in (first row) [:gs$cell :col]))
@@ -46,7 +47,9 @@
 
 (defn- vecs->map [key-fn [headers & rows]]
   (into []
-        (map (partial zip (map key-fn headers)))
+        (map (partial zip (cons ::row (map key-fn
+                                           ;; Drop Row column 
+                                           (rest headers)))))
         rows))
 
 (defn sheet->vecs

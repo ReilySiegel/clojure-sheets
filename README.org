@@ -21,28 +21,32 @@ This example uses [[https://docs.google.com/spreadsheets/d/1EOWjYGWIzf8i7rcnlhvq
   (a/<!! (sheets/sheet->map "1EOWjYGWIzf8i7rcnlhvqWtRL5Ke2V2vz7FgYGYL8EBo"
                             {:page  1
                              :key-fn sheets.key-fns/idiomatic-keyword}))
-  ;; => [{:person/first-name "Matilda",
+  ;; => [{:clojure-sheets.core/row 2,
+  ;;      :person/first-name "Matilda",
   ;;      :person/last-name "Jones",
   ;;      :person/address "123 Some Road",
   ;;      :person/address1 "Apt 4",
   ;;      :person/address2 nil,
   ;;      :person.address/city "Somewhereville",
   ;;      :person.address/state "MA"}
-  ;;     {:person/first-name "Michael",
+  ;;     {:clojure-sheets.core/row 3,
+  ;;      :person/first-name "Michael",
   ;;      :person/last-name "Jones",
   ;;      :person/address "321 Another Ave",
   ;;      :person/address1 "Apartment Complex",
   ;;      :person/address2 "Unit 32",
   ;;      :person.address/city "Somewhereville",
   ;;      :person.address/state "MA"}
-  ;;     {:person/first-name "Another",
+  ;;     {:clojure-sheets.core/row 4,
+  ;;      :person/first-name "Another",
   ;;      :person/last-name "Person",
   ;;      :person/address "1234 Some Lane",
   ;;      :person/address1 nil,
   ;;      :person/address2 nil,
   ;;      :person.address/city "Boston",
   ;;      :person.address/state "MA"}
-  ;;     {:person/first-name "Nobody",
+  ;;     {:clojure-sheets.core/row 5,
+  ;;      :person/first-name "Nobody",
   ;;      :person/last-name "Noname",
   ;;      :person/address nil,
   ;;      :person/address1 nil,
@@ -53,15 +57,30 @@ This example uses [[https://docs.google.com/spreadsheets/d/1EOWjYGWIzf8i7rcnlhvq
   (a/<!! (sheets/sheet->map "1EOWjYGWIzf8i7rcnlhvqWtRL5Ke2V2vz7FgYGYL8EBo"
                             {:page  2
                              :key-fn keyword}))
-  ;; => [{:DataPoint "Alpha", :Data1 1.0, :Data2 123.0, :Data3 32.5}
-  ;;     {:DataPoint "Beta", :Data1 2.0, :Data2 188.12, :Data3 122.4, :Data4 33.0}
-  ;;     {:DataPoint "Epsilon",
+  ;; => [{:clojure-sheets.core/row 2,
+  ;;      :DataPoint "Alpha",
+  ;;      :Data1 1.0,
+  ;;      :Data2 123.0,
+  ;;      :Data3 32.5}
+  ;;     {:clojure-sheets.core/row 3,
+  ;;      :DataPoint "Beta",
+  ;;      :Data1 2.0,
+  ;;      :Data2 188.12,
+  ;;      :Data3 122.4,
+  ;;      :Data4 33.0}
+  ;;     {:clojure-sheets.core/row 4,
+  ;;      :DataPoint "Epsilon",
   ;;      :Data1 1.4,
   ;;      :Data2 290.0,
   ;;      :Data3 5.5,
   ;;      :Data4 123.0,
   ;;      :Data5 11.0}
-  ;;     {:DataPoint "Monkey", :Data1 33.0, :Data2 1.0, :Data3 33.0, :Data4 0.0}]
+  ;;     {:clojure-sheets.core/row 5,
+  ;;      :DataPoint "Monkey",
+  ;;      :Data1 33.0,
+  ;;      :Data2 1.0,
+  ;;      :Data3 33.0,
+  ;;      :Data4 0.0}]
 #+end_src
 
 *** ~:key-fns~
