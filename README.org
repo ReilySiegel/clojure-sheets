@@ -100,3 +100,6 @@ from the Usage section.
 As you can see, ~idiomatic-keyword~ consistently gives the best results. You
 should probably prefer this ~:key-fn~, unless you have a good reason for writing
 your own.
+*** Query with EQL
+If you want to query sheets data with EQL, check out [[https://github.com/ReilySiegel/EQLizr][EQLizr]], which supports
+~clojure-sheets~ as a backend.
