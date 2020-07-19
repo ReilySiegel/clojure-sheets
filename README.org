@@ -1,7 +1,12 @@
 ** Disclaimer
 This uses undocumented features of Google's Publish feature. This may change in
 the future, which will break this library. Don't use this for a missile launch
-system. 
+system.
+
+In addition, the Publish feature requires that a sheet be made public. You 
+probably shouldn't use this to store missile launch codes, or any other 
+sensitive information.
+
 ** Usage
 To use this library, you need a sheet-id that can be found in the URL for your
 google sheet: ~docs.google.com/spreadsheets/d/THIS-IS-YOUR-SHEET-ID/edit#gid=0~.
