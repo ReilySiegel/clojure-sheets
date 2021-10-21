@@ -5,7 +5,7 @@
             [clojure.tools.reader.edn :as edn]))
 
 (defn- parse-json [string]
-  #?(:clj (json/parse-string keyword string)
+  #?(:clj (json/parse-string string keyword)
      :cljs (js->clj (. js/JSON parse string) :keywordize-keys true)))
 
 (defn- fetch-url [url chan]
@@ -48,9 +48,9 @@
 
   Other `:key-fn`s are provided in `clojure-sheets.key-fns`, such as
   `idiomatic-keyword`."
-  ([sheet-id page] (sheet->map sheet-id page {}))
-  ([sheet-id page
-    {:keys [key-fn]
+  ([sheet-id] (sheet->map sheet-id {}))
+  ([sheet-id
+    {:keys [key-fn page]
      :or   {key-fn identity}}]
    (fetch-url (sheet-url sheet-id page)
               (a/promise-chan (map (partial table->map key-fn))))))
